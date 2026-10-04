@@ -66,7 +66,9 @@ export class AuthController {
 
 		const usesHttpsFrontend = frontendUrl
 			.split(',')
-			.some((u) => u.trim().startsWith('https://'));
+			.map((u) => u.trim())
+			.filter(Boolean)
+			.some((u) => u.replace(/\/+$/, '').toLowerCase().startsWith('https://'));
 		const isProductionLike =
 			nodeEnv === 'production' ||
 			!!this.config.get<string>('RENDER') ||
