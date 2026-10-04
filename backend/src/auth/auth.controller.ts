@@ -32,7 +32,10 @@ export class AuthController {
 	) {
 		const { accessToken, user } = await this.authService.login(loginDto);
 		response.cookie(ACCESS_TOKEN_COOKIE, accessToken, this.cookieOptions());
-		return user;
+		return {
+			...user,
+			accessToken,
+		};
 	}
 
 	@Get('me')
