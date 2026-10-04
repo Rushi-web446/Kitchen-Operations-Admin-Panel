@@ -53,11 +53,37 @@ export class AuthController {
 	}
 
 	private cookieOptions(): CookieOptions {
-		const isProduction = this.config.get<string>('NODE_ENV') === 'production';
+		const nodeEnv = this.config.get<string>('NODE_ENV');
+		const explicitSecure = this.config.get<string>('COOKIE_SECURE');
+		const explicitSameSite = this.config.get<string>('COOKIE_SAME_SITE');
+		const frontendUrl =
+			this.config.get<string>('FRONTEND_URLS') ??
+			this.config.get<string>('FRONTEND_URL') ??
+			'';
+
+		const usesHttpsFrontend = frontendUrl
+			.split(',')
+			.some((u) => u.trim().startsWith('https://'));
+		const isProductionLike =
+			nodeEnv === 'production' ||
+			!!this.config.get<string>('RENDER') ||
+			usesHttpsFrontend;
+
+		const secure =
+			explicitSecure !== undefined
+				? explicitSecure === 'true'
+				: isProductionLike;
+
+		const sameSite: CookieOptions['sameSite'] = explicitSameSite
+			? (explicitSameSite as CookieOptions['sameSite'])
+			: secure
+				? 'none'
+				: 'lax';
+
 		return {
 			httpOnly: true,
-			secure: isProduction,
-			sameSite: isProduction ? 'none' : 'lax',
+			secure,
+			sameSite,
 			path: '/',
 		};
 	}
