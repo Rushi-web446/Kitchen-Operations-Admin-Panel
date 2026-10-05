@@ -11,21 +11,6 @@ Kitchen staff, dispatchers, drivers, and admins all use the same panel; each rol
 
 ---
 
-## Live deployment
-
-> **Sign in with exactly these credentials on the live app —** this is what reviewers use:
->
-> | Role       | Email                  | Password    |
-> |------------|------------------------|-------------|
-> | Admin      | `admin@test.com`       | `Test@1234` |
-> | Kitchen    | `kitchen@test.com`     | `Test@1234` |
-> | Dispatch   | `dispatch@test.com`    | `Test@1234` |
-> | Driver     | `driver@test.com`      | `Test@1234` |
-
-- **Frontend:** `https://kitchen-operations-admin-panel-tepz.vercel.app`
-- **Backend API:** `https://kitchen-operations-admin-panel.onrender.com/api`
-
-Both instances stay running for ≥ 2 weeks after submission.
 
 ---
 
